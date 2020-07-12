@@ -61,6 +61,8 @@
 	
 	<link rel="stylesheet" href="css/style.css">
 
+	
+
 
 	<!-- Modernizr JS -->
 	<script src="js/modernizr-2.6.2.min.js"></script>
@@ -68,24 +70,13 @@
 	<!--[if lt IE 9]>
 	<script src="js/respond.min.js"></script>
 	<![endif]-->
-
-	<style>
-		.buttonz {
-		background-color: #F78536;
-		color: white;
-		padding: 14px 20px;
-		margin: 8px 0;
-		margin-top: 30px;
-		border: none;
-		cursor: pointer;
-		width: 100%;
-		}
-
-		.buttonz:hover {
-		opacity: 0.8;
-		}
-	</style>
-
+		<style>
+			#table_header{width: 15%}
+			#table_header_index{width: 5%}
+			table, th, td{border: 1px solid black; border-collapse: collapse; text-align: center; color: #F78536;}
+			
+			
+		</style>
 	</head>
 	<body>
 		<div id="fh5co-wrapper">
@@ -99,13 +90,13 @@
 					<!-- START #fh5co-menu-wrap -->
 					<nav id="fh5co-menu-wrap" role="navigation">
 						<ul class="sf-menu" id="fh5co-primary-menu">
-							<li><a href="index.html">Home</a></li>
+							<li class="active"><a href="index.html">Home</a></li>
 							<li><a href="about.html">About</a></li>
 							<li>
 								<a class="fh5co-sub-ddown">Account</a>
 								<ul class="fh5co-sub-menu">
 									<li><a href="signIn.html">Sign In</a></li>
-									<li class="active"><a href="signUp.html">Sign Up</a></li>
+									<li><a href="signUp.html">Sign Up</a></li>
 								</ul>
 							</li>
 						</ul>
@@ -119,27 +110,125 @@
 		<div class="fh5co-hero">
 			<div class="fh5co-overlay"></div>
 			<div class="fh5co-cover" data-stellar-background-ratio="0.5" style="background-image: url(images/cover_bg_1.jpg);">
-				<div class="desc" style="top: 17%">
-					<div class="container" style="width: 40%; background: white; padding: 50px; box-shadow: 0px 2px 16px rgba(0, 0, 0, 0.5);">
-						
+				<div class="desc">
+					<div class="container">
 						<div class="row">
-							<div class="desc2 animate-box">
-								<div class="col-sm-1 col-sm-push-1 col-md-10 col-md-push-1" style="text-align: center;">
-									<form action="/action_page.php">										
-										<label style="color: black;" for="lname">Full name</label><br>
-										<input style="color: #F78536; background: rgba(0, 0, 0, 0.05);" type="text" id="fullName" name="fullName" placeholder="Full Name"><br>
-										<label style="color: black;" for="fname">Username</label><br>
-										<input style="color: #F78536; background: rgba(0, 0, 0, 0.05);" type="text" id="userName" name="userName" placeholder="Userame"><br>
-										<label style="color: black;" for="fname">Password</label><br>
-										<input style="color: #F78536; background: rgba(0, 0, 0, 0.05);" type="text" id="password" name="password" placeholder="Password"><br>
-										<label style="color: black;" for="lname">Email</label><br>
-										<input style="color: #F78536; background: rgba(0, 0, 0, 0.05);" type="text" id="email" name="email" placeholder="Email"><br>
-										<label style="color: black;" for="fname">Phone Number:</label><br>
-										<input style="color: #F78536; background: rgba(0, 0, 0, 0.05);" type="text" id="phoneNumber" name="phoneNumber" placeholder="Phone Number"><br><br>
-										<input  class="buttonz" type="submit" value="Submit">
-									  </form> 
+							<div class="col-sm-5 col-md-12 col-lg-12">
+								<div class="tabulation animate-box">
+
+								  <!-- Nav tabs -->
+								   <ul class="nav nav-tabs" role="tablist">
+								      <li role="presentation" class="active">
+								      	<a href="#totalbookings" aria-controls="flights" role="tab" data-toggle="tab">Total Bookings</a>
+								      </li>
+										</li>
+										<li role="presentation">
+											<a href="#inprogress" aria-controls="hotels" role="tab" data-toggle="tab">In Progress</a>
+										</li>
+										<li role="presentation">
+											<a href="#completed" aria-controls="packages" role="tab" data-toggle="tab">Completed</a>
+										</li>
+								   </ul>
+
+								   <!-- Tab panes -->
+									<div class="tab-content">
+									 <div role="tabpanel" class="tab-pane active" id="totalbookings">
+										<div class="row">
+											<div class="col-xxs-12 col-xs-12 col-lg-12 mt">
+												<table>
+													<tr>
+														<th id="table_header_index">No.</th>
+														<th id="table_header">Name</th>
+														<th id="table_header">Depature</th>
+														<th id="table_header">Arrival</th>
+														<th id="table_header">Class</th>
+														<th id="table_header_index">Adult</th>
+														<th id="table_header_index">Children</th>
+														<th id="table_header">Destination</th>
+														<th id="table_header">Status</th>
+													</tr>
+													<tr>
+														<td>AA</td>
+														<td>AA</td>
+														<td>AA</td>
+														<td>AA</td>
+														<td>AA</td>
+														<td>AA</td>
+														<td>AA</td>
+														<td>AA</td>
+														<td>AA</td>
+													</tr>
+												</table>
+												
+											</div>
+										</div>
+									 </div>
+
+									 <div role="tabpanel" class="tab-pane" id="inprogress">
+									 	<div class="row">
+											<div class="col-xxs-12 col-xs-12 col-lg-12 mt">
+												<table>
+													<tr>
+														<th id="table_header_index">No.</th>
+														<th id="table_header">Name</th>
+														<th id="table_header">Depature</th>
+														<th id="table_header">Arrival</th>
+														<th id="table_header">Class</th>
+														<th id="table_header_index">Adult</th>
+														<th id="table_header_index">Children</th>
+														<th id="table_header">Destination</th>
+														<th id="table_header">Approval</th>
+													</tr>
+													<tr>
+														<td>AA</td>
+														<td>AA</td>
+														<td>AA</td>
+														<td>AA</td>
+														<td>AA</td>
+														<td>AA</td>
+														<td>AA</td>
+														<td>AA</td>
+														<td><input type="submit" class="btn btn-primary btn-block" value="Approve"></td>
+													</tr>
+												</table>
+											</div>
+										</div>
+									 </div>
+
+									 <div role="tabpanel" class="tab-pane" id="completed">
+									 	<div class="row">
+											<div class="col-xxs-12 col-xs-12 col-lg-12 mt">
+												<table>
+													<tr>
+														<th id="table_header_index">No.</th>
+														<th id="table_header">Name</th>
+														<th id="table_header">Depature</th>
+														<th id="table_header">Arrival</th>
+														<th id="table_header">Class</th>
+														<th id="table_header_index">Adult</th>
+														<th id="table_header_index">Children</th>
+														<th id="table_header">Destination</th>
+													</tr>
+													<tr>
+														<td>AA</td>
+														<td>AA</td>
+														<td>AA</td>
+														<td>AA</td>
+														<td>AA</td>
+														<td>AA</td>
+														<td>AA</td>
+														<td>AA</td>
+													</tr>
+												</table>
+												
+											</div>
+										</div>
+									 </div>
+									</div>
+
 								</div>
 							</div>
+							
 						</div>
 					</div>
 				</div>
