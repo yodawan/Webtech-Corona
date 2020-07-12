@@ -69,6 +69,142 @@
 	<script src="js/respond.min.js"></script>
 	<![endif]-->
 
+	<style>
+		/* Full-width input fields */
+		input[type=text], input[type=password] {
+		width: 100%;
+		padding: 12px 20px;
+		margin: 8px 0;
+		display: inline-block;
+		border: 1px solid #ccc;
+		box-sizing: border-box;
+		}
+
+		/* Set a style for all buttons */
+		.buttonz {
+		background-color: #4CAF50;
+		color: white;
+		padding: 14px 20px;
+		margin: 8px 0;
+		margin-top: 30px;
+		border: none;
+		cursor: pointer;
+		width: 100%;
+		}
+
+		.buttonCancel {
+		background-color: #f44336;
+		color: white;
+		padding: 14px 20px;
+		margin: 8px 0;
+		border: none;
+		cursor: pointer;
+		width: 100%;
+		}
+
+		.buttonz:hover {
+		opacity: 0.8;
+		}
+
+		.buttonCancel:hover {
+		opacity: 0.8;
+		}
+
+		/* Extra styles for the cancel button */
+		.cancelbtn {
+		width: auto;
+		padding: 10px 18px;
+		background-color: #f44336;
+		}
+
+		/* Center the image and position the close button */
+		.imgcontainer {
+		text-align: center;
+		margin: 24px 0 12px 0;
+		position: relative;
+		}
+
+		img.avatar {
+		width: 20%;
+		border-radius: 50%;
+		}
+
+		.container {
+		padding: 16px;
+		}
+
+		span.psw {
+		float: right;
+		padding-top: 16px;
+		}
+
+		/* The Modal (background) */
+		.modal {
+		display: none; /* Hidden by default */
+		position: fixed; /* Stay in place */
+		z-index: 1; /* Sit on top */
+		left: 0;
+		top: 0;
+		width: 100%; /* Full width */
+		height: 100%; /* Full height */
+		overflow: auto; /* Enable scroll if needed */
+		background-color: rgb(0,0,0); /* Fallback color */
+		background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+		padding-top: 60px;
+		}
+
+		/* Modal Content/Box */
+		.modal-content {
+		background-color: #fefefe;
+		margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+		border: 1px solid #888;
+		width: 80%; /* Could be more or less, depending on screen size */
+		}
+
+		/* The Close Button (x) */
+		.close {
+		position: absolute;
+		right: 25px;
+		top: 0;
+		color: #000;
+		font-size: 35px;
+		font-weight: bold;
+		}
+
+		.close:hover,
+		.close:focus {
+		color: red;
+		cursor: pointer;
+		}
+
+		/* Add Zoom Animation */
+		.animate {
+		-webkit-animation: animatezoom 0.6s;
+		animation: animatezoom 0.6s
+		}
+
+		@-webkit-keyframes animatezoom {
+		from {-webkit-transform: scale(0)} 
+		to {-webkit-transform: scale(1)}
+		}
+		
+		@keyframes animatezoom {
+		from {transform: scale(0)} 
+		to {transform: scale(1)}
+		}
+
+		/* Change styles for span and cancel button on extra small screens */
+		@media screen and (max-width: 300px) {
+		span.psw {
+			display: block;
+			float: none;
+		}
+		.cancelbtn {
+			width: 100%;
+		}
+		}
+	</style>
+
 	</head>
 	<body>
 		<div id="fh5co-wrapper">
@@ -102,248 +238,43 @@
 		<div class="fh5co-hero">
 			<div class="fh5co-overlay"></div>
 			<div class="fh5co-cover" data-stellar-background-ratio="0.5" style="background-image: url(images/cover_bg_1.jpg);">
-				<div class="desc">
+				<div class="desc" style="top:30%;">
 					<div class="container">
 						<div class="row">
-							<div class="col-sm-5 col-md-5">
-								<div class="tabulation animate-box">
-
-								  <!-- Nav tabs -->
-								   <ul class="nav nav-tabs" role="tablist">
-								      <li role="presentation" class="active">
-								      	<a href="#flights" aria-controls="flights" role="tab" data-toggle="tab">Flights</a>
-								      </li>
-								      <li role="presentation">
-								    	   <a href="#hotels" aria-controls="hotels" role="tab" data-toggle="tab">Hotels</a>
-								      </li>
-								      <li role="presentation">
-								    	   <a href="#packages" aria-controls="packages" role="tab" data-toggle="tab">Packages</a>
-								      </li>
-								   </ul>
-
-								   <!-- Tab panes -->
-									<div class="tab-content">
-									 <div role="tabpanel" class="tab-pane active" id="flights">
-										<div class="row">
-											<div class="col-xxs-12 col-xs-6 mt">
-												<section>
-													<label for="class">From:</label>
-													<select class="cs-select cs-skin-border">
-														<option value="" disabled selected>Madrid, Spain</option>
-														<option value="madrid">Madrid, Spain</option>
-														<option value="dubai">Dubai, UAE</option>
-														<option value="amsterdam">Amsterdam, Netherlands</option>
-														<option value="sydney">Sydney, Australia</option>
-														<option value="sydney">Kuala Lumpur, Malaysia</option>
-													</select>
-												</section>
-											</div>
-											<div class="col-xxs-12 col-xs-6 mt">
-												<div class="input-field">
-													<section>
-														<label for="class">To:</label>
-														<select class="cs-select cs-skin-border">
-															<option value="" disabled selected>Dubai, UAE</option>
-															<option value="madrid">Madrid, Spain</option>
-															<option value="dubai">Dubai, UAE</option>
-															<option value="amsterdam">Amsterdam, Netherlands</option>
-															<option value="sydney">Sydney, Australia</option>
-															<option value="sydney">Kuala Lumpur, Malaysia</option>
-														</select>
-													</section>
-												</div>
-											</div>
-											<div class="col-xxs-12 col-xs-6 mt alternate">
-												<div class="input-field">
-													<label for="date-start">Check In:</label>
-													<input type="text" class="form-control" id="date-start" placeholder="mm/dd/yyyy"/>
-												</div>
-											</div>
-											<div class="col-xxs-12 col-xs-6 mt alternate">
-												<div class="input-field">
-													<label for="date-end">Check Out:</label>
-													<input type="text" class="form-control" id="date-end" placeholder="mm/dd/yyyy"/>
-												</div>
-											</div>
-											<div class="col-sm-12 mt">
-												<section>
-													<label for="class">Class:</label>
-													<select class="cs-select cs-skin-border">
-														<option value="" disabled selected>Economy</option>
-														<option value="economy">Economy</option>
-														<option value="first">First</option>
-														<option value="business">Business</option>
-													</select>
-												</section>
-											</div>
-											<div class="col-xxs-12 col-xs-6 mt">
-												<section>
-													<label for="class">Adult:</label>
-													<select class="cs-select cs-skin-border">
-														<option value="" disabled selected>1</option>
-														<option value="1">1</option>
-														<option value="2">2</option>
-														<option value="3">3</option>
-														<option value="4">4</option>
-													</select>
-												</section>
-											</div>
-											<div class="col-xxs-12 col-xs-6 mt">
-												<section>
-													<label for="class">Children:</label>
-													<select class="cs-select cs-skin-border">
-														<option value="" disabled selected>1</option>
-														<option value="1">1</option>
-														<option value="2">2</option>
-														<option value="3">3</option>
-														<option value="4">4</option>
-													</select>
-												</section>
-											</div>
-											<div class="col-xs-12">
-												<input type="submit" class="btn btn-primary btn-block" value="Search Flight">
-											</div>
-										</div>
-									 </div>
-
-									 <div role="tabpanel" class="tab-pane" id="hotels">
-									 	<div class="row">
-											<div class="col-xxs-12 col-xs-12 mt">
-												<div class="input-field">
-													<label for="from">City:</label>
-													<input type="text" class="form-control" id="from-place" placeholder="Los Angeles, USA"/>
-												</div>
-											</div>
-											<div class="col-xxs-12 col-xs-6 mt alternate">
-												<div class="input-field">
-													<label for="date-start">Return:</label>
-													<input type="text" class="form-control" id="date-start" placeholder="mm/dd/yyyy"/>
-												</div>
-											</div>
-											<div class="col-xxs-12 col-xs-6 mt alternate">
-												<div class="input-field">
-													<label for="date-end">Check Out:</label>
-													<input type="text" class="form-control" id="date-end" placeholder="mm/dd/yyyy"/>
-												</div>
-											</div>
-											<div class="col-sm-12 mt">
-												<section>
-													<label for="class">Rooms:</label>
-													<select class="cs-select cs-skin-border">
-														<option value="" disabled selected>1</option>
-														<option value="economy">1</option>
-														<option value="first">2</option>
-														<option value="business">3</option>
-													</select>
-												</section>
-											</div>
-											<div class="col-xxs-12 col-xs-6 mt">
-												<section>
-													<label for="class">Adult:</label>
-													<select class="cs-select cs-skin-border">
-														<option value="" disabled selected>1</option>
-														<option value="1">1</option>
-														<option value="2">2</option>
-														<option value="3">3</option>
-														<option value="4">4</option>
-													</select>
-												</section>
-											</div>
-											<div class="col-xxs-12 col-xs-6 mt">
-												<section>
-													<label for="class">Children:</label>
-													<select class="cs-select cs-skin-border">
-														<option value="" disabled selected>1</option>
-														<option value="1">1</option>
-														<option value="2">2</option>
-														<option value="3">3</option>
-														<option value="4">4</option>
-													</select>
-												</section>
-											</div>
-											<div class="col-xs-12">
-												<input type="submit" class="btn btn-primary btn-block" value="Search Hotel">
-											</div>
-										</div>
-									 </div>
-
-									 <div role="tabpanel" class="tab-pane" id="packages">
-									 	<div class="row">
-											<div class="col-xxs-12 col-xs-6 mt">
-												<div class="input-field">
-													<label for="from">City:</label>
-													<input type="text" class="form-control" id="from-place" placeholder="Los Angeles, USA"/>
-												</div>
-											</div>
-											<div class="col-xxs-12 col-xs-6 mt">
-												<div class="input-field">
-													<label for="from">Destination:</label>
-													<input type="text" class="form-control" id="to-place" placeholder="Tokyo, Japan"/>
-												</div>
-											</div>
-											<div class="col-xxs-12 col-xs-6 mt alternate">
-												<div class="input-field">
-													<label for="date-start">Departs:</label>
-													<input type="text" class="form-control" id="date-start" placeholder="mm/dd/yyyy"/>
-												</div>
-											</div>
-											<div class="col-xxs-12 col-xs-6 mt alternate">
-												<div class="input-field">
-													<label for="date-end">Return:</label>
-													<input type="text" class="form-control" id="date-end" placeholder="mm/dd/yyyy"/>
-												</div>
-											</div>
-											<div class="col-sm-12 mt">
-												<section>
-													<label for="class">Rooms:</label>
-													<select class="cs-select cs-skin-border">
-														<option value="" disabled selected>1</option>
-														<option value="economy">1</option>
-														<option value="first">2</option>
-														<option value="business">3</option>
-													</select>
-												</section>
-											</div>
-											<div class="col-xxs-12 col-xs-6 mt">
-												<section>
-													<label for="class">Adult:</label>
-													<select class="cs-select cs-skin-border">
-														<option value="" disabled selected>1</option>
-														<option value="1">1</option>
-														<option value="2">2</option>
-														<option value="3">3</option>
-														<option value="4">4</option>
-													</select>
-												</section>
-											</div>
-											<div class="col-xxs-12 col-xs-6 mt">
-												<section>
-													<label for="class">Children:</label>
-													<select class="cs-select cs-skin-border">
-														<option value="" disabled selected>1</option>
-														<option value="1">1</option>
-														<option value="2">2</option>
-														<option value="3">3</option>
-														<option value="4">4</option>
-													</select>
-												</section>
-											</div>
-											<div class="col-xs-12">
-												<input type="submit" class="btn btn-primary btn-block" value="Search Packages">
-											</div>
-										</div>
-									 </div>
-									</div>
-
-								</div>
-							</div>
 							<div class="desc2 animate-box">
-								<div class="col-sm-7 col-sm-push-1 col-md-7 col-md-push-1">
-									<h3>Welcome to</h3>
-									<h2>Coronamu Malaysia Travel and Tours</h2>
-									<h3>Fly with us to the Moon and back</h3>
-									<!-- <span class="price">$599</span> -->
-									<!-- <p><a class="btn btn-primary btn-lg" href="#">Get Started</a></p> -->
+								<div class="col-sm-1 col-sm-push-1 col-md-10 col-md-push-1" style="text-align: center;">
+									<h2>Welcome Back!</h2>
+									<button onclick="document.getElementById('id01').style.display='block'" style="width:50%;" class="buttonz">Login</button>
+									
+									<p style="margin: 35px 0px 0px">or</p>
+									
+									<button onclick="location.href='signUp.html'" style="width:50%;" class="buttonz">Sign Up</button>
+									<div id="id01" class="modal">
+  
+										<form class="modal-content animate" action="/action_page.php" method="post">
+										  <div class="imgcontainer">
+											<span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+											<img src="images/male_avatar.jpg" alt="Avatar" class="avatar">
+										  </div>
+									  
+										  <div class="container">
+											<label for="uname"><b>Username</b></label>
+											<input style="margin: 0px;" type="text" placeholder="Enter Username" name="uname" required>
+									  
+											<label for="psw"><b>Password</b></label>
+											<input type="password" placeholder="Enter Password" name="psw" required>
+											  
+											<button class="buttonz" type="submit">Login</button>
+											
+										  
+									  
+										  
+											<button type="button" onclick="document.getElementById('id01').style.display='none'" class="buttonCancel">Cancel</button>
+											<!-- <span class="psw"><a href="#"></a>Forgot password?</a></span> -->
+										  </div>
+										</form>
+									  </div>
+									  
 								</div>
 							</div>
 						</div>
@@ -389,6 +320,18 @@
 
 	<!-- jQuery -->
 
+	<script>
+		// Get the modal
+		var modal = document.getElementById('id01');
+		
+		// When the user clicks anywhere outside of the modal, close it
+		window.onclick = function(event) {
+			if (event.target == modal) {
+				modal.style.display = "none";
+			}
+		}
+	</script>
+		
 
 	<script src="js/jquery.min.js"></script>
 	<!-- jQuery Easing -->
