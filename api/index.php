@@ -70,7 +70,7 @@
       $jwtExp = $jwtIAT + (180 * 60); //expire after 3 hours
 
       $jwtToken = array(
-         "iss" => "contacts.net", //issuer of the token
+         "iss" => "travel.net", //issuer of the token
          "iat" => $jwtIAT, //issued at time
          "exp" => $jwtExp, //expire
          "role" => $role,
@@ -85,7 +85,7 @@
       $dbhost="127.0.0.1";
       $dbuser="root";
       $dbpass="";
-      $dbname="contacts";
+      $dbname="travel";
 
       $db = new Database($dbhost, $dbuser, $dbpass, $dbname);
       return $db;
@@ -284,7 +284,7 @@
             $jwtExp = $jwtIAT + (60 * 60 * 12); //expire after 12 hours
 
             $jwtToken = array(
-               "iss" => "mycontacts.net", //token issuer
+               "iss" => "mydestination.net", //token issuer
                "iat" => $jwtIAT, //issued at time
                "exp" => $jwtExp, //expire
                "role" => "member",
@@ -360,7 +360,7 @@
    //
    //restricted route
    //POST - INSERT CONTACT - secure route - need token
-   $app->post('/contacts', function($request, $response){
+   $app->post('/destination', function($request, $response){
 
       $ownerlogin = getLoginFromTokenPayload($request, $response);
 

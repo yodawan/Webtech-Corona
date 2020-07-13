@@ -2,23 +2,31 @@
 
    class User {
       var $id;
-      var $login;
-      var $name;
+      var $username;
+      var $password;
+      var $full_name;
+      var $role;
       var $email;
-      var $mobileno;
-      var $photo;
+      var $phone_number;
       var $addeddate;
    }
 
-   class Contact {
+   class Destination {
       var $id;
+      var $departure;
+      var $arrival;
+      var $class;
+      var $adult;
+      var $children;
       var $name;
-      var $email;
-      var $mobileno;
-      var $gender;
-      var $photo;
-      var $dob;
+      var $destination;
+      var $owner_login;
       var $addeddate;
+   }
+
+   class Booking{
+      var $id;
+      var $foreign_key;
       var $status;
    }
 
@@ -137,18 +145,22 @@
          } 
       }
 
-      function insertUser($login, $clearpassword) {
+      function insertUser($username, $password,$full_name,$email,$phone_number) {
 
          //hash the password using one way md5 brcrypt hashing
-         $passwordhash = hashPassword($clearpassword);
+         //$passwordhash = hashPassword($clearpassword);
          try {
             
-            $sql = "INSERT INTO users(login, password, addeddate) 
-                    VALUES (:login, :password, NOW())";
+            $sql = "INSERT INTO user(username, password,full_name,email,phone_number,role, addeddate) 
+                    VALUES (:username, :password, NOW())";
 
             $stmt = $this->db->prepare($sql);  
-            $stmt->bindParam("login", $login);
-            $stmt->bindParam("password", $passwordhash);
+            $stmt->bindParam("username", $username);
+            $stmt->bindParam("password", $password);
+            $stmt->bindParam("full_name", $full_name);
+            $stmt->bindParam("email", $email);
+            $stmt->bindParam("phone_number", $phone_number);
+            $stmt->bindParam("role", "member");
             $stmt->execute();
 
             $dbs = new DbStatus();
@@ -171,7 +183,7 @@
 
       function checkemail($email) {
          $sql = "SELECT *
-                 FROM users
+                 FROM user
                  WHERE email = :email";
 
          $stmt = $this->db->prepare($sql);
@@ -181,13 +193,13 @@
          return $row_count;
       }
 
-      function authenticateUser($login) {
-         $sql = "SELECT login, password as passwordhash, email, name
-                 FROM users
-                 WHERE login = :login";        
+      function authenticateUser($username) {
+         $sql = "SELECT username, password, email, full_name
+                 FROM user
+                 WHERE username = :username";        
 
          $stmt = $this->db->prepare($sql);
-         $stmt->bindParam("login", $login);
+         $stmt->bindParam("username", $username);
          $stmt->execute(); 
          $row_count = $stmt->rowCount(); 
 
@@ -196,10 +208,10 @@
          if ($row_count) {
             while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                $user = new User();
-               $user->login = $row['login'];
-               $user->passwordhash = $row['passwordhash'];
+               $user->username = $row['username'];
+               $user->password = $row['password'];
                $user->email = $row['email'];
-               $user->name = $row['name'];
+               $user->full_name = $row['full_name'];
             }
          }
 
@@ -209,20 +221,23 @@
       /////////////////////////////////////////////////////////////////////////////////// contacts
 
       // insert contact
-      function insertContact($name, $email, $mobileno, $gender, $dob, $ownerlogin) {
+      function insertDestination($departure, $arrival, $class, $adult, $children, $destination,$owner_login) {
 
          try {
             
-            $sql = "INSERT INTO contacts(name, email, mobileno, gender, dob, ownerlogin, addeddate) 
-                    VALUES (:name, :email, :mobileno, :gender, :dob, :ownerlogin, NOW())";
+            $sql = "INSERT INTO destination(departure,arrival,class,adult,children,name,destination, owner_login, addeddate) 
+                    VALUES (:departure, :arrival, :class, :adult, :children,:name,:destination, :owner_login, NOW())";
 
             $stmt = $this->db->prepare($sql);  
-            $stmt->bindParam("name", $name);
+            $stmt->bindParam("departure", $departure);
             $stmt->bindParam("email", $email);
-            $stmt->bindParam("mobileno", $mobileno);
-            $stmt->bindParam("gender", $gender);
-            $stmt->bindParam("dob", $dob);
-            $stmt->bindParam("ownerlogin", $ownerlogin);
+            $stmt->bindParam("arrival", $arrival);
+            $stmt->bindParam("class", $class);
+            $stmt->bindParam("adult", $adult);
+            $stmt->bindParam("children", $children);
+            $stmt->bindParam("name", $name);
+            $stmt->bindParam("destination", $destination);
+            $stmt->bindParam("owner_login", $owner_login);
             $stmt->execute();
 
             $dbs = new DbStatus();
@@ -244,13 +259,13 @@
       }
 
       //get all contacts
-      function getAllContactsViaLogin($ownerlogin) {
+      function getAllDestinationViaLogin($ownerlogin) {
          $sql = "SELECT *
-                 FROM contacts
-                 WHERE ownerlogin = :ownerlogin";
+                 FROM destination
+                 WHERE owner_login = :owner_login";
 
          $stmt = $this->db->prepare($sql);
-         $stmt->bindParam("ownerlogin", $ownerlogin);
+         $stmt->bindParam("owner_login", $owner_login);
          $stmt->execute(); 
          $row_count = $stmt->rowCount();
 
@@ -260,30 +275,27 @@
          {
             while($row = $stmt->fetch(PDO::FETCH_ASSOC))
             {
-               $contact = new Contact();
-               $contact->id = $row['id'];
-               $contact->name = $row['name'];
-               $contact->email = $row['email'];
-               $contact->mobileno = $row['mobileno'];
-               $contact->gender = $row['gender'];
-               $contact->photo = $row['photo'];
-
-               $dob = $row['dob'];
-               $frontenddob = date("d-m-Y",strtotime($dob));
-               $contact->dob = $frontenddob;
-
+               $destination = new Destination();
+               $destination->id = $row['id'];
+               $destination->departure = $row['departure'];
+               $destination->arrival = $row['arrival'];
+               $destination->class = $row['class'];
+               $destination->adult = $row['adult'];
+               $destination->children = $row['children'];
+               $destination->name = $row['name'];
+               $destination->destination = $row['destination'];
                $addeddate = $row['addeddate'];
-               $contact->addeddate = time_elapsed_string($addeddate); 
+               $destination->addeddate = time_elapsed_string($addeddate); 
 
-               $contact->status = $row['status'];  
+               $destination->status = $row['status'];  
 
-               array_push($data, $contact);
+               array_push($data, $destination);
             }
          }
 
          return $data;
       }
-
+/*
       //get single contact via id
       //ownerlogin for rolling no hacking (the id)
       function getContactViaId($id, $ownerlogin) {
@@ -329,7 +341,9 @@
 
          return $contact;
       }
+*/
 
+/*
       //update contact via id
       function updateContactViaId($id, $name, $email, $mobileno, $gender, $dob) {
 
@@ -367,7 +381,9 @@
             return $dbs;
          } 
       }
+*/
 
+/*      
       //update contact status via id
       function updateContactStatusViaId($id, $status) {
 
@@ -397,7 +413,9 @@
             return $dbs;
          } 
       } 
+*/
 
+/*      
       //delete contact via id
       function deleteContactViaId($id) {
 
@@ -424,15 +442,17 @@
             return $dbstatus;
          }           
       } 
+*/
 
+/*
       //get single user via login
-      function getUserViaLogin($login) {
+      function getUserViaLogin($username) {
          $sql = "SELECT *
-                 FROM users
-                 WHERE login = :login";
+                 FROM user
+                 WHERE username = :username";
 
          $stmt = $this->db->prepare($sql);
-         $stmt->bindParam("login", $login);
+         $stmt->bindParam("username", $username);
          $stmt->execute(); 
          $row_count = $stmt->rowCount();
 
@@ -443,7 +463,7 @@
             while($row = $stmt->fetch(PDO::FETCH_ASSOC))
             {               
                $user->id = $row['id'];
-               $user->login = $row['login'];
+               $user->username = $row['username'];
                $user->name = $row['name'];
                $user->email = $row['email'];
                $user->mobileno = $row['mobileno'];
@@ -456,19 +476,21 @@
 
          return $user;
       }
+*/
 
+/*      
       //update user via login
-      function updateUserViaLogin($login, $name, $email, $mobileno) {
+      function updateUserViaLogin($username, $name, $email, $mobileno) {
 
-         $sql = "UPDATE users
+         $sql = "UPDATE user
                  SET name = :name,
                      email = :email,
                      mobileno = :mobileno
-                 WHERE login = :login";
+                 WHERE username = :username";
 
          try {
             $stmt = $this->db->prepare($sql);  
-            $stmt->bindParam("login", $login);
+            $stmt->bindParam("username", $username);
             $stmt->bindParam("name", $name);
             $stmt->bindParam("email", $email);
             $stmt->bindParam("mobileno", $mobileno);
@@ -490,15 +512,17 @@
             return $dbs;
          } 
       }
+*/
 
-      function getUserPasswordViaLogin($login) {
+/*      
+      function getUserPasswordViaLogin($username) {
 
          $sql = "SELECT password
-                 FROM users
-                 WHERE login = :login";
+                 FROM user
+                 WHERE username = :username";
 
          $stmt = $this->db->prepare($sql);
-         $stmt->bindParam("login", $login);
+         $stmt->bindParam("username", $username);
          $stmt->execute(); 
          $row_count = $stmt->rowCount();
 
@@ -514,20 +538,22 @@
 
          return $password;       
       }
+*/
 
+/*
       //update user password via login
-      function updateUserPasswordViaLogin($login, $clearpassword) {
+      function updateUserPasswordViaLogin($username, $clearpassword) {
 
          //hash the new password using one way md5 brcrypt encrypted hashing
          $passwordhash = hashPassword($clearpassword);
 
-         $sql = "UPDATE users
+         $sql = "UPDATE user
                  SET password = :password
-                 WHERE login = :login";
+                 WHERE username = :username";
 
          try {
             $stmt = $this->db->prepare($sql);  
-            $stmt->bindParam("login", $login);
+            $stmt->bindParam("username", $username);
             $stmt->bindParam("password", $passwordhash);
             $stmt->execute();
 
@@ -576,5 +602,5 @@
 
             return $dbs;
          } 
-      }
+      }*/
    }

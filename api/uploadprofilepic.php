@@ -35,7 +35,7 @@
       $dbhost="127.0.0.1";
       $dbuser="root";
       $dbpass="";
-      $dbname="contacts";
+      $dbname="travel";
 
       $db = new Database($dbhost, $dbuser, $dbpass, $dbname);
       return $db;
