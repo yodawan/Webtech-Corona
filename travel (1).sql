@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 13, 2020 at 02:27 AM
+-- Generation Time: Jul 13, 2020 at 02:37 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.2.27
 
@@ -62,13 +62,20 @@ CREATE TABLE `destination` (
 CREATE TABLE `user` (
   `id` int(11) NOT NULL,
   `username` varchar(25) NOT NULL,
-  `password` varchar(25) NOT NULL,
+  `password` varchar(250) NOT NULL,
   `phone_number` int(12) NOT NULL,
   `email` varchar(50) NOT NULL,
   `full_name` varchar(50) NOT NULL,
   `addeddate` datetime NOT NULL,
   `role` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`id`, `username`, `password`, `phone_number`, `email`, `full_name`, `addeddate`, `role`) VALUES
+(1, 'admin', '$2y$10$bssrjpRe/ZbEyeqkiN6UfuQreCszQWcYXBX911po/ZuLSVx0NW5HC', 139197758, 'coronamu@gmail.com', 'Adnin', '2020-07-13 08:31:36', 'admin');
 
 --
 -- Indexes for dumped tables
@@ -112,7 +119,7 @@ ALTER TABLE `destination`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
