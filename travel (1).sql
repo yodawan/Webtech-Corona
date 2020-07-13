@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 13, 2020 at 02:21 AM
+-- Generation Time: Jul 13, 2020 at 02:27 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.2.27
 
@@ -34,6 +34,42 @@ CREATE TABLE `booking` (
   `status` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `destination`
+--
+
+CREATE TABLE `destination` (
+  `id` int(11) NOT NULL,
+  `departure` date NOT NULL,
+  `arrival` date NOT NULL,
+  `class` int(1) NOT NULL,
+  `adult` int(2) NOT NULL,
+  `children` int(2) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `destination` varchar(50) NOT NULL,
+  `addeddate` datetime NOT NULL,
+  `owner_login` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user`
+--
+
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL,
+  `username` varchar(25) NOT NULL,
+  `password` varchar(25) NOT NULL,
+  `phone_number` int(12) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `full_name` varchar(50) NOT NULL,
+  `addeddate` datetime NOT NULL,
+  `role` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 --
 -- Indexes for dumped tables
 --
@@ -45,6 +81,18 @@ ALTER TABLE `booking`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `destination`
+--
+ALTER TABLE `destination`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -52,6 +100,18 @@ ALTER TABLE `booking`
 -- AUTO_INCREMENT for table `booking`
 --
 ALTER TABLE `booking`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `destination`
+--
+ALTER TABLE `destination`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `user`
+--
+ALTER TABLE `user`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
