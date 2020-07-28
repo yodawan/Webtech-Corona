@@ -143,7 +143,7 @@
          $passwordhash = hashPassword($clearpassword);
          try {
             
-            $sql = "INSERT INTO admins(login, password, addeddate) 
+            $sql = "INSERT INTO users(login, password, addeddate) 
                     VALUES (:login, :password, NOW())";
 
             $stmt = $this->db->prepare($sql);  
@@ -171,7 +171,7 @@
 
       function checkemail($email) {
          $sql = "SELECT *
-                 FROM admins
+                 FROM users
                  WHERE email = :email";
 
          $stmt = $this->db->prepare($sql);
@@ -183,7 +183,7 @@
 
       function authenticateUser($login) {
          $sql = "SELECT login, password as passwordhash, email, name
-                 FROM admins
+                 FROM users
                  WHERE login = :login";        
 
          $stmt = $this->db->prepare($sql);
