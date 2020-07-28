@@ -1,10 +1,10 @@
 <div class="row">
   	<div class="col-sm-12">   
-     	<h1>Destination List</h1>
+     	<h1>Travel List</h1>
 
      	<p>
      		<a href="#contacts/add" class="btn btn-info" id="addcontact">
-     			<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Destination
+     			<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Book Now
      		</a>
      	</p>
 
@@ -13,7 +13,7 @@
 			  	<thead class="thead-dark">
 			    	<tr>
 				      <th>#</th>
-				      <th>Package Name (id)</th>
+				      <th>Package Name</th>
 				      <th>Date Travel</th>
 				      <th>Operation</th>
 			    	</tr>
@@ -25,12 +25,14 @@
 
 					      <td>
 					      	<a href="#contacts/view/{{id}}" style="text-decoration: none">
-					      		{{ name }} ({{ id }})
+					      		{{ name }}
 					      	</a>
 					      </td>
 
 					      <td>
-					      	{{{ dob }}}
+					      	{{!-- <a href="javascript:;" class="updatestatus" style="text-decoration: none"> --}}
+					      		{{{ dob }}}
+					      	{{!-- </a> --}}
 					      </td>
 
 					      <td>
@@ -39,14 +41,7 @@
 				      		</a>
 				      		&nbsp;
 
-				      		<a href='#contacts/edit/{{id}}' style="text-decoration: none">
-				      			<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-				      		</a>
-				      		&nbsp;
-
-				      		<a href='javascript:;' style="text-decoration: none" class="deletecontact">
-				      			<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-				      		</a>
+				      		
 					      </td>
 				      </tr>
 				   {{/each}}

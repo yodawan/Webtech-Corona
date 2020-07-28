@@ -42,14 +42,6 @@ $(function(){
          return "<span class='label label-success'>Approved</span>";
 	});
 
-	Handlebars.registerHelper("displaystatustype3", function(status) {
-		var thestatus = parseInt(status);
-		if (thestatus === 0)        
-		 return "<span class='label label-danger'>Not Approved</span>";
-		else if (thestatus === 1)        
-         return "<span class='label label-success'>Approved</span>";
-	});
-
 	Handlebars.registerHelper("displaygender", function(gender) {
 
 		var thegender = parseInt(gender);
@@ -275,7 +267,7 @@ $(function(){
 		//decode jwt token using jwt-decode
 		var decoded = jwt_decode(token);
 		$("#loginname").html(decoded.login);	
-		
+
 		//get all contacts using user login => ownerlogin
 	   $.ajax({
 	      type: "get", 
@@ -285,7 +277,7 @@ $(function(){
 
 				var contactsTemplate = Handlebars.templates['contacts']({"contactlist": data});
 
-				
+				$("#divcontent").empty();
 				$("#divcontent").html(contactsTemplate).hide().fadeIn(1000);
 
 				//add data using json array in context to first-td for each row in tbody
@@ -320,9 +312,20 @@ $(function(){
 				});
 
 				//reading the data from the first td of each row in tbody
-				$('#tblcontacts tbody tr').each(function(i) 
-				{
+				$('#tblcontacts tbody tr').each(function(i) {
 					var tdIndex = $(this).children().eq(0);
+					console.log("Contact ID: " + $(tdIndex).data("id"));
+					console.log("Contact name: " + $(tdIndex).data("name"));
+					console.log("Contact email: " + $(tdIndex).data("email"));
+					console.log("Contact mobileno: " + $(tdIndex).data("mobileno"));
+					console.log("Contact gender: " + $(tdIndex).data("gender"));
+					console.log("Contact photo: " + $(tdIndex).data("photo"));
+
+					console.log("Contact dob: " + $(tdIndex).data("dob"));
+					console.log("Contact addeddate: " + $(tdIndex).data("addeddate"));
+					console.log("Contact status: " + $(tdIndex).data("status"));					
+					
+					console.log("");
 				});
          },
          error: function(xhr, statusText, err) {
@@ -615,6 +618,7 @@ $(function(){
 
 					bootbox.alert("Rolling no hacking detected! - Login Id is submitted to the NSA BlackHat list");
 					window.location.href = "#contacts";
+
 				}
 
          },
@@ -660,27 +664,33 @@ $(function(){
 			window.location.href = "#login";
 			return;
 		}
-		
+
 		//get token from sessionStorage
 		var token = sessionStorage.getItem("token");
-		
+
 		//decode jwt token using jwt-decode
 		var decoded = jwt_decode(token);
-		$("#loginname").html(decoded.login);
+		$("#loginname").html(decoded.login);	
 
-		$("#divcontent").empty();
-		// bootbox.alert("TESTING");
-		
 		//get all contacts using user login => ownerlogin
 	   $.ajax({
 	      type: "get", 
-	      url: 'api/reports',
+	      url: 'api/contacts',
 	      dataType: "json",
 	      success: function(data){
-			
-				var bookingsTemplate = Handlebars.templates['reports']({"bookinglist": data});
 
-				$("#divcontent").html(bookingsTemplate).hide().fadeIn(1000);
+				var contactsTemplate = Handlebars.templates['reports']({"contactlist": data});
+
+				$("#divcontent").empty();
+				$("#divcontent").html(contactsTemplate).hide().fadeIn(1000);
+
+				$(".breadcrumb").empty();
+				$(".breadcrumb").append("<li><a href='#home'>Home</a></li>");
+				$(".breadcrumb").append("<li class='active'>Reports</li>");
+
+				$(".navbar-collapse li").removeClass('active');
+				$(".navbar-collapse li a[href='#reports']").parent().addClass('active');
+
 
 				//add data using json array in context to first-td for each row in tbody
 				$('#tblcontacts tbody tr').each(function(i) {
@@ -689,24 +699,25 @@ $(function(){
 					var id = data[i].id;
 
 					var name = data[i].name;
-					var totalPerson = data[i].totalPerson;
-					var phoneNo = data[i].phoneNo;
-					var idTravel = data[i].idTravel;
+					var email = data[i].email;
+					var mobileno = data[i].mobileno;
+					var gender = data[i].gender;
 					var photo = data[i].photo;
 
-					var dateTravel = data[i].dateTravel;
+					var dob = data[i].dob;
 					var addeddate = data[i].addeddate;
 					var status = data[i].status;				
+					
 
 					$(tdIndex).data("id", id);
 
 					$(tdIndex).data("name", name);
-					$(tdIndex).data("totalPerson", totalPerson);
-					$(tdIndex).data("phoneNo", phoneNo);
-					$(tdIndex).data("idTravel", idTravel);
+					$(tdIndex).data("email", email);
+					$(tdIndex).data("mobileno", mobileno);
+					$(tdIndex).data("gender", gender);
 					$(tdIndex).data("photo", photo);
 
-					$(tdIndex).data("dateTravel", dateTravel);
+					$(tdIndex).data("dob", dob);
 					$(tdIndex).data("addeddate", addeddate);
 					$(tdIndex).data("status", status);					
 						
@@ -715,6 +726,18 @@ $(function(){
 				//reading the data from the first td of each row in tbody
 				$('#tblcontacts tbody tr').each(function(i) {
 					var tdIndex = $(this).children().eq(0);
+					console.log("Contact ID: " + $(tdIndex).data("id"));
+					console.log("Contact name: " + $(tdIndex).data("name"));
+					console.log("Contact email: " + $(tdIndex).data("email"));
+					console.log("Contact mobileno: " + $(tdIndex).data("mobileno"));
+					console.log("Contact gender: " + $(tdIndex).data("gender"));
+					console.log("Contact photo: " + $(tdIndex).data("photo"));
+
+					console.log("Contact dob: " + $(tdIndex).data("dob"));
+					console.log("Contact addeddate: " + $(tdIndex).data("addeddate"));
+					console.log("Contact status: " + $(tdIndex).data("status"));					
+					
+					console.log("");
 				});
          },
          error: function(xhr, statusText, err) {
@@ -734,14 +757,9 @@ $(function(){
 			   if (xhr.status == 404) {
 			     	bootbox.alert("Error 404 - API resource not found at the server");
 			   }
-         }
-	  });
-	  $(".breadcrumb").empty();
-	  $(".breadcrumb").append("<li><a href='#home'>Home</a></li>");
-	  $(".breadcrumb").append("<li class='active'>Reports</li>");
 
-	  $(".navbar-collapse li").removeClass('active');
-	  $(".navbar-collapse li a[href='#reports']").parent().addClass('active');
+         }
+      });		yy
 	});
 
 	//complete the template code for about
