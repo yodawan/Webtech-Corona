@@ -155,7 +155,7 @@
          $passwordhash = hashPassword($clearpassword);
          try {
             
-            $sql = "INSERT INTO admins(login, password, addeddate) 
+            $sql = "INSERT INTO users(login, password, addeddate) 
                     VALUES (:login, :password, NOW())";
 
             $stmt = $this->db->prepare($sql);  
@@ -183,7 +183,7 @@
 
       function checkemail($email) {
          $sql = "SELECT *
-                 FROM admins
+                 FROM users
                  WHERE email = :email";
 
          $stmt = $this->db->prepare($sql);
@@ -195,7 +195,7 @@
 
       function authenticateUser($login) {
          $sql = "SELECT login, password as passwordhash, email, name
-                 FROM admins
+                 FROM users
                  WHERE login = :login";        
 
          $stmt = $this->db->prepare($sql);
@@ -517,7 +517,7 @@
       //get single user via login
       function getUserViaLogin($login) {
          $sql = "SELECT *
-                 FROM admins
+                 FROM users
                  WHERE login = :login";
 
          $stmt = $this->db->prepare($sql);
@@ -549,7 +549,7 @@
       //update user via login
       function updateUserViaLogin($login, $name, $email, $mobileno) {
 
-         $sql = "UPDATE admins
+         $sql = "UPDATE users
                  SET name = :name,
                      email = :email,
                      mobileno = :mobileno
@@ -583,7 +583,7 @@
       function getUserPasswordViaLogin($login) {
 
          $sql = "SELECT password
-                 FROM admins
+                 FROM users
                  WHERE login = :login";
 
          $stmt = $this->db->prepare($sql);
@@ -610,7 +610,7 @@
          //hash the new password using one way md5 brcrypt encrypted hashing
          $passwordhash = hashPassword($clearpassword);
 
-         $sql = "UPDATE admins
+         $sql = "UPDATE users
                  SET password = :password
                  WHERE login = :login";
 
