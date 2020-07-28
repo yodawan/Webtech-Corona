@@ -70,7 +70,7 @@
       $jwtExp = $jwtIAT + (180 * 60); //expire after 3 hours
 
       $jwtToken = array(
-         "iss" => "travel.net", //issuer of the token
+         "iss" => "contacts.net", //issuer of the token
          "iat" => $jwtIAT, //issued at time
          "exp" => $jwtExp, //expire
          "role" => $role,
@@ -85,7 +85,7 @@
       $dbhost="127.0.0.1";
       $dbuser="root";
       $dbpass="";
-      $dbname="travel";
+      $dbname="coronamu";
 
       $db = new Database($dbhost, $dbuser, $dbpass, $dbname);
       return $db;
@@ -284,7 +284,7 @@
             $jwtExp = $jwtIAT + (60 * 60 * 12); //expire after 12 hours
 
             $jwtToken = array(
-               "iss" => "mydestination.net", //token issuer
+               "iss" => "mycontacts.net", //token issuer
                "iat" => $jwtIAT, //issued at time
                "exp" => $jwtExp, //expire
                "role" => "member",
@@ -360,7 +360,7 @@
    //
    //restricted route
    //POST - INSERT CONTACT - secure route - need token
-   $app->post('/destination', function($request, $response){
+   $app->post('/contacts', function($request, $response){
 
       $ownerlogin = getLoginFromTokenPayload($request, $response);
 
@@ -407,12 +407,13 @@
    $app->get('/contacts/[{id}]', function($request, $response, $args){
 
       //get owner login - to prevent rolling no hacking, bcoz of insecure get method
-      $ownerlogin = getLoginFromTokenPayload($request, $response);  
+      // $ownerlogin = getLoginFromTokenPayload($request, $response);  
       
       $id = $args['id'];
 
       $db = getDatabase();
-      $data = $db->getContactViaId($id, $ownerlogin);
+      // $data = $db->getContactViaId($id, $ownerlogin);
+      $data = $db->getContactViaId($id);
       $db->close();
 
       return $response->withJson($data, 200)

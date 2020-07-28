@@ -1,0 +1,61 @@
+<div class="row">
+   <div class="col-sm-6">   
+      <h1>View Destination Info<h1/> 
+
+		<table class="table table-striped table-hover table-bordered">
+		   <tbody>
+		      {{!-- <tr>
+		         <th>Id</th>
+	            <td>{{id}}</td>
+		      </tr>
+		      <tr>
+		         <th>Photo</th>
+	            <td>
+	            	<a href="#contacts/edit/uploadphoto/{{id}}">
+	            		<img src="img/{{photo}}" width="200">
+	            	</a>
+	            </td>
+		      </tr> --}}
+		      <tr>
+		         <th>Name</th>
+	            <td>{{name}}</td>
+		      </tr>		      
+		      <tr>
+		         <th>Price</th>
+	            <td><span class='label label-info'>{{email}}</span></td>
+		      </tr>
+		      <tr>
+		         <th>Total Day</th>
+	            <td><span class='label label-info'>{{mobileno}}</span></td>
+		      </tr>
+		      <tr>
+		         <th>Airline Name</th>
+	            <td>{{{displaygender gender}}}</td>
+		      </tr>
+		      <tr>
+		         <th>Date Travel</th>
+	            <td><span class='label label-info'>{{dob}}</span></td>
+		      </tr>
+		      {{!-- <tr>
+		         <th>Status</th>
+	            <td>{{{displaystatustype2 status}}}</td>
+		      </tr>		       --}}
+		   </tbody>
+		</table> 
+
+     	<p>
+     		<a href="#contacts" class="btn btn-info" id="returntocontacts">
+     			Return
+     		</a>
+
+     		{{!-- <a href="#contacts/edit/uploadphoto/{{id}}" class="btn btn-info">
+     				Change Photo
+     			</a> --}}
+
+     		<a href="#contacts/edit/{{id}}" class="btn btn-info" id="editcontact">
+     			<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit Destination
+     		</a>
+     	</p>
+
+   </div>
+</div>

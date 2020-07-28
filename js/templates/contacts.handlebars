@@ -1,0 +1,206 @@
+<div class="row">
+  	<div class="col-sm-12">   
+     	<h1>Destination List</h1>
+
+     	<p>
+     		<a href="#contacts/add" class="btn btn-info" id="addcontact">
+     			<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Tourism Package
+     		</a>
+     	</p>
+
+     	<div class="table-responsive">
+			<table class="table table-striped table-hover table-bordered" id="tblcontacts">
+			  	<thead class="thead-dark">
+			    	<tr>
+				      <th>#</th>
+				      <th>Package Name</th>
+				      <th>Date Travel</th>
+				      <th>Operation</th>
+			    	</tr>
+			  	</thead>
+			  	<tbody>
+				   {{#each contactlist}}
+				      <tr>
+					      <td class='index-column'></td>
+
+					      <td>
+					      	<a href="#contacts/view/{{id}}" style="text-decoration: none">
+					      		{{ name }}
+					      	</a>
+					      </td>
+
+					      <td>
+					      	{{!-- <a href="javascript:;" class="updatestatus" style="text-decoration: none"> --}}
+					      		{{{ dob }}}
+					      	{{!-- </a> --}}
+					      </td>
+
+					      <td>
+					      	<a href='#contacts/view/{{id}}' style="text-decoration: none">
+				      			<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+				      		</a>
+				      		&nbsp;
+
+				      		<a href='#contacts/edit/{{id}}' style="text-decoration: none">
+				      			<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+				      		</a>
+				      		&nbsp;
+
+				      		<a href='javascript:;' style="text-decoration: none" class="deletecontact">
+				      			<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+				      		</a>
+					      </td>
+				      </tr>
+				   {{/each}}
+			  	<tbody>
+			</table>
+		</div>
+  	</div>
+</div>
+
+<script>
+  	$(function(){
+
+      $("#tblcontacts").on("click", ".updatestatus", function() {
+
+	      var link = $(this);
+	      console.log(link);
+
+	      //                     TD       TR
+	      var parentTR = $(this).parent().parent();
+	      var firstTD = $(parentTR).children().eq(0);
+
+	      // get status
+	      var status = $(firstTD).data("status");
+	      var id = $(firstTD).data("id");
+	      Swal.fire("Status: " + status);
+
+			Swal.fire({
+			  	title: 'Are you sure?',
+			  	html: "You want to change the status?<br />Status: " + status,
+			   icon: 'warning',
+			   showCancelButton: true,
+			   confirmButtonColor: '#3085d6',
+			   cancelButtonColor: '#d33',
+			   confirmButtonText: 'Yes, change it!'
+
+			}).then((result) => {
+
+				if (result.value) {
+
+					var obj = new Object();
+				 	obj.status = status;	
+
+	            $.ajax({
+	               type: "put",
+	               url: 'api/contacts/status/' + id,
+					   contentType: 'application/json',
+			      	data: JSON.stringify(obj),            
+					   dataType: "json",
+	               success: function(data){
+
+	                  if (data.updateStatus) {
+
+	                     bootbox.alert("contact status update successful");
+
+	                     $(firstTD).data("status", data.status);
+
+								if (data.status == 0)				
+									$(link).html("<span class='label label-danger'>Booked</span>"); 
+								else
+									$(link).html("<span class='label label-success'>Approved</span>");	
+
+	                  } 
+	                  else {
+
+	                     bootbox.alert("contact status update failed - please try again: " + data.errorMessage)
+	                  }
+	               },
+	               error: function() {
+	                  console.log("error");
+	               }
+	            });					
+				}
+
+			})
+      });
+
+      $("#tblcontacts").on("click", ".deletecontact", function() {
+      	var link = $(this);
+
+      	//                     TD       TR
+	      var parentTR = $(this).parent().parent();
+	      var firstTD = $(parentTR).children().eq(0);
+
+	      //get the id
+	      var id = $(firstTD).data("id")
+
+			Swal.fire({
+			  	title: 'Are you sure?',
+			  	html: "You want to delete the destination?",
+			   icon: 'warning',
+			   showCancelButton: true,
+			   confirmButtonColor: '#3085d6',
+			   cancelButtonColor: '#d33',
+			   confirmButtonText: 'Yes, delete it!'
+
+			}).then((result) => {
+
+				if (result.value) {
+
+		        	//delete the contact at table contacts using contact id
+
+		        	var token = sessionStorage.getItem("token");
+
+				   $.ajax({
+				      type: "delete",
+				      url: 'api/contacts/' + id,               
+				      dataType: "json",
+				      success: function(data){
+
+	                  if (data.deleteStatus) {
+
+	                     bootbox.alert("Destination deletion successful");
+
+						      $(parentTR).fadeOut("slow", "swing", function(e) {
+
+						      	//remove row from the table
+						        	$(parentTR).remove();
+
+
+						      });	                    
+
+	                  } 
+	                  else {
+
+	                     bootbox.alert("contact deletion failed - please try again: " + data.error)
+	                  }
+
+	               },
+			         error: function(xhr, statusText, err) {
+
+			         	if (xhr.status == 401) {
+						     	//response text from the server if there is any
+						     	var responseText = JSON.parse(xhr.responseText);
+						     	bootbox.alert("Error 401 - Unauthorized: " + responseText.message);
+						     	
+								$("#loginname").html("noname");
+								sessionStorage.removeItem("token");
+								sessionStorage.removeItem("login");
+								window.location.href = "#login";
+								return;
+						   }
+
+						   if (xhr.status == 404) {
+						     	bootbox.alert("Error 404 - API resource not found at the server");
+						   }
+
+			         }
+	            });		            
+
+				}
+
+			})
+      });
+   });
+</script>
