@@ -401,6 +401,30 @@
                       ->withHeader('Content-type', 'application/json');
    });
 
+   $app->get('/reports', function($request, $response){
+      
+      $ownerlogin = getLoginFromTokenPayload($request, $response);
+
+      $db = getDatabase();
+      $data = $db->getAllBookingsViaLogin($ownerlogin);
+      $db->close();
+
+      return $response->withJson($data, 200)
+                      ->withHeader('Content-type', 'application/json');
+   });
+
+   $app->get('/home', function($request, $response){
+      
+      $ownerlogin = getLoginFromTokenPayload($request, $response);
+
+      $db = getDatabase();
+      $data = $db->getAllBookingsViaLogin($ownerlogin);
+      $db->close();
+
+      return $response->withJson($data, 200)
+                      ->withHeader('Content-type', 'application/json');
+   });
+
    //restricted route
    //- secure route - need token
    //GET - SINGLE CONTACT VIA ID
@@ -471,6 +495,35 @@
          $status = 1;
 
       $dbs = $db->updateContactStatusViaId($id, $status);
+      $db->close();
+
+      $data = Array(
+         "updateStatus" => $dbs->status,
+         "errorMessage" => $dbs->error,
+         "status" => $status
+      );
+
+      return $response->withJson($data, 200)
+                      ->withHeader('Content-type', 'application/json');
+   });
+
+   $app->put('/reports/status/[{id}]', function($request, $response, $args){
+     
+      //from url
+      $id = $args['id'];
+
+      //form data, from json data
+      $json = json_decode($request->getBody());
+      $status = $json->status;
+
+      $db = getDatabase();
+
+      if ($status)
+         $status = 0;
+      else
+         $status = 1;
+
+      $dbs = $db->updateBookingStatusViaId($id, $status);
       $db->close();
 
       $data = Array(

@@ -1,16 +1,21 @@
 <div class="row">
   	<div class="col-sm-12">   
-     	<h1>Booking List</h1>
+     	<h1>Destination List</h1>
 
+     	<p>
+     		<a href="#contacts/add" class="btn btn-info" id="addcontact">
+     			<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Destination
+     		</a>
+     	</p>
 
      	<div class="table-responsive">
 			<table class="table table-striped table-hover table-bordered" id="tblcontacts">
 			  	<thead class="thead-dark">
 			    	<tr>
 				      <th>#</th>
-				      <th>Tourist Name</th>
-					  <th>Booked Package</th>
-				      <th>Status</th>
+				      <th>Package Name (id)</th>
+				      <th>Date Travel</th>
+				      <th>Operation</th>
 			    	</tr>
 			  	</thead>
 			  	<tbody>
@@ -19,17 +24,29 @@
 					      <td class='index-column'></td>
 
 					      <td>
-					      	<a href="#contacts/view/{{id}}" style="text-decoration: underline">
-					      		{{ name }}
+					      	<a href="#contacts/view/{{id}}" style="text-decoration: none">
+					      		{{ name }} ({{ id }})
 					      	</a>
 					      </td>
-						  
-						  <td></td>
-					      
-						  <td>
-					      	<a href="javascript:;" class="updatestatus" style="text-decoration: none">
-					      		{{{ displaystatustype2 status }}}
-					      	</a>
+
+					      <td>
+					      	{{{ dob }}}
+					      </td>
+
+					      <td>
+					      	<a href='#contacts/view/{{id}}' style="text-decoration: none">
+				      			<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+				      		</a>
+				      		&nbsp;
+
+				      		<a href='#contacts/edit/{{id}}' style="text-decoration: none">
+				      			<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+				      		</a>
+				      		&nbsp;
+
+				      		<a href='javascript:;' style="text-decoration: none" class="deletecontact">
+				      			<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+				      		</a>
 					      </td>
 				      </tr>
 				   {{/each}}
@@ -82,7 +99,7 @@
 
 	                  if (data.updateStatus) {
 
-	                     bootbox.alert("Booking status update successful");
+	                     bootbox.alert("contact status update successful");
 
 	                     $(firstTD).data("status", data.status);
 
@@ -90,6 +107,7 @@
 									$(link).html("<span class='label label-danger'>Booked</span>"); 
 								else
 									$(link).html("<span class='label label-success'>Approved</span>");	
+
 	                  } 
 	                  else {
 
@@ -117,7 +135,7 @@
 
 			Swal.fire({
 			  	title: 'Are you sure?',
-			  	html: "You want to delete the contact?",
+			  	html: "You want to delete the destination?",
 			   icon: 'warning',
 			   showCancelButton: true,
 			   confirmButtonColor: '#3085d6',
@@ -140,7 +158,7 @@
 
 	                  if (data.deleteStatus) {
 
-	                     bootbox.alert("contact deletion successful");
+	                     bootbox.alert("Destination deletion successful");
 
 						      $(parentTR).fadeOut("slow", "swing", function(e) {
 

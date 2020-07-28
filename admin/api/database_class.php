@@ -22,6 +22,18 @@
       var $status;
    }
 
+   class Booking {
+      var $id;
+      var $name;
+      var $totalPerson;
+      var $phoneNo;
+      var $idTravel;
+      var $photo;
+      var $dateTravel;
+      var $addeddate;
+      var $status;
+   }
+
    class DbStatus {
       var $status;
       var $error;
@@ -210,7 +222,6 @@
 
       // insert contact
       function insertContact($name, $email, $mobileno, $gender, $dob, $ownerlogin) {
-
          try {
             
             $sql = "INSERT INTO travel(packageName, price, totalDay, airlineName, dateTravel, ownerlogin, addeddate) 
@@ -243,18 +254,11 @@
          }          
       }
 
-      // function getTotalBooked(){
-      //    $sql = "SELECT COUNT(status)
-      //            FROM booking 
-      //            WHERE status = 0
-      //            ";
-      // }
-
       //get all contacts
       function getAllContactsViaLogin($ownerlogin) {
          $sql = "SELECT *
                  FROM travel 
-                 ORDER BY dateTravel ASC
+                 ORDER BY addeddate DESC
                  ";
                //   WHERE ownerlogin = :ownerlogin
 
@@ -291,6 +295,48 @@
             }
          }
 
+         return $data;
+      }
+
+      //get all contacts
+      function getAllBookingsViaLogin($ownerlogin) {
+         $sql = "SELECT *
+                 FROM bookings
+                 ";
+               //   WHERE ownerlogin = :ownerlogin
+
+
+         $stmt = $this->db->prepare($sql);
+         $stmt->bindParam("ownerlogin", $ownerlogin);
+         $stmt->execute(); 
+         $row_count = $stmt->rowCount();
+
+         $data = array();
+
+         if ($row_count)
+         {
+            while($row = $stmt->fetch(PDO::FETCH_ASSOC))
+            {
+               $booking = new Booking();
+               $booking->id = $row['id'];
+               $booking->name = $row['name'];
+               $booking->totalPerson = $row['totalPerson'];
+               $booking->phoneNo = $row['phoneNo'];
+               $booking->idTravel = $row['idTravel'];
+               $booking->photo = $row['photo'];
+               
+               $dob = $row['dateTravel'];
+               $frontenddob = date("d-m-Y",strtotime($dob));
+               $booking->dateTravel = $frontenddob;
+
+               $addeddate = $row['addeddate'];
+               $booking->addeddate = time_elapsed_string($addeddate); 
+
+               $booking->status = $row['status'];  
+
+               array_push($data, $booking);
+            }
+         }
          return $data;
       }
 
@@ -385,6 +431,36 @@
       function updateContactStatusViaId($id, $status) {
 
          $sql = "UPDATE travel
+                 SET status = :status
+                 WHERE id = :id";
+
+         try {
+            $stmt = $this->db->prepare($sql);  
+            $stmt->bindParam("id", $id);
+            $stmt->bindParam("status", $status);
+            $stmt->execute();
+
+            $dbs = new DbStatus();
+            $dbs->status = true;
+            $dbs->error = "none";
+
+            return $dbs;
+         }
+         catch(PDOException $e) {
+            $errorMessage = $e->getMessage();
+
+            $dbs = new DbStatus();
+            $dbs->status = false;
+            $dbs->error = $errorMessage;
+
+            return $dbs;
+         } 
+      }
+
+      //update contact status via id
+      function updateBookingStatusViaId($id, $status) {
+
+         $sql = "UPDATE bookings
                  SET status = :status
                  WHERE id = :id";
 

@@ -1,0 +1,35 @@
+<div class="row">
+  	<div class="col-sm-6">   
+     	<h1>Upload Photo</h1>
+     	<br />
+      <form class="form-horizontal" id="formuploadphoto">
+        	<fieldset>
+          	<div class="form-group">
+	            <label for="date" class="col-lg-3 control-label">Current Pic</label>
+	            <div class="col-lg-9">
+	            	<span id="currentphoto"><img src="img/{{photo}}" width="200"></span>
+	            </div>
+          	</div>
+          	<div class="form-group">
+	            <label for="profilepic" class="col-lg-3 control-label">Profile Pic</label>
+	            <div class="col-lg-9">
+	              	<input type="file" class="form-control" id="profilepic">
+	              	<br />
+	              	<div class="col-lg-9 col-lg-offset-3" id="mimetype">
+	              	</div>
+
+	              	<div class="col-lg-9 col-lg-offset-3" id="imageplaceholder">
+	              	</div>
+	            </div>
+          	</div>
+          	<div class="form-group">
+	            <div class="col-lg-9 col-lg-offset-3">
+	            	<input type="hidden" id="uploadcontactid" name="uploadcontactid" value="{{id}}">
+	              	<button type="reset" class="btn btn-default">Cancel</button>
+	              	<button type="submit" class="btn btn-primary">Submit</button>
+	            </div>
+          	</div>
+        	</fieldset>
+      </form>     	
+  	</div>
+</div>
