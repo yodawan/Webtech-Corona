@@ -382,6 +382,8 @@ Handlebars.registerHelper("displaystatustype3", function(status) {
 
 		//var contactsAddTemplate = Handlebars.templates['contacts-add'](context);
 		var contactsAddTemplate = Handlebars.templates['contacts-add'];
+		var context = {IDTRAVEL:idTravel};
+		var contactsAddTemplate = contactsAddTemplate(context);
 
 		$("#divcontent").empty();
 		$("#divcontent").html(contactsAddTemplate).hide().fadeIn(1000);
