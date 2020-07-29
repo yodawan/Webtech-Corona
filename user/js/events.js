@@ -17,17 +17,19 @@ $(function(){
 
 		//get the value from the form
 		var name = $("#addname").val();
-		var totalPerson = $("#addemail").val();
-		var phoneNo = $("#addmobileno").val();
-		var idtravel = $("#idtravel").val();
-		var datetravel = $("#datetravel").val();		
+		var totalPerson = $("#addmobileno").val();
+		var phoneNo = $("#addemail").val();
+		var idTravel = $("#idTravel").val();
+		var dateTravel = $("#dateTravel").val();		
 		
 		var obj = new Object();
 	 	obj.name = name;
 	 	obj.totalPerson = totalPerson;
 	 	obj.phoneNo = phoneNo;
-	 	obj.idtravel = idtravel;
-		obj.datetravel = datetravel;
+	 	obj.idTravel = idTravel;
+		obj.dateTravel = dateTravel;
+		console.log(obj);
+
 		$.ajax({
 		   type: "post",
 		   url: 'api/contacts',
@@ -39,7 +41,6 @@ $(function(){
 		      if (data.insertStatus) {
 
 		         bootbox.alert("Booking Successful");
-		         		   console.log(obj);
 
 		         //redirect to the /#contacts
 		         window.location.href = "#contacts";
