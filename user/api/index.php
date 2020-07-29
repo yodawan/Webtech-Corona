@@ -359,7 +359,7 @@
    //contacts CRUD  ///////////////////////////////////////////////////////////////////  strart
    //
    //restricted route
-   //POST - INSERT CONTACT - secure route - need token
+   //POST - INSERT BOOKING - secure route - need token
    $app->post('/contacts', function($request, $response){
 
       $ownerlogin = getLoginFromTokenPayload($request, $response);
@@ -367,13 +367,13 @@
       //form data
       $json = json_decode($request->getBody());
       $name = $json->name;
-      $email = $json->email;
-      $mobileno = $json->mobileno;
-      $gender = $json->gender;
-      $dob = $json->dob;
+      $totalPerson = $json->totalPerson;
+      $phoneNo = $json->phoneNo;
+      $idTravel = $json->idTravel;
+      $dateTravel = $json->dateTravel;
 
       $db = getDatabase();
-      $dbs = $db->insertContact($name, $email, $mobileno, $gender, $dob, $ownerlogin);
+      $dbs = $db->insertBooking($name, $totalPerson, $phoneNo, $idTravel, $dateTravel, $ownerlogin);
       $db->close();
 
       $data = array(
@@ -395,6 +395,30 @@
 
       $db = getDatabase();
       $data = $db->getAllContactsViaLogin($ownerlogin);
+      $db->close();
+
+      return $response->withJson($data, 200)
+                      ->withHeader('Content-type', 'application/json');
+   });
+
+   $app->get('/reports', function($request, $response){
+      
+      $ownerlogin = getLoginFromTokenPayload($request, $response);
+
+      $db = getDatabase();
+      $data = $db->getAllBookingsViaLogin($ownerlogin);
+      $db->close();
+
+      return $response->withJson($data, 200)
+                      ->withHeader('Content-type', 'application/json');
+   });
+
+   $app->get('/home', function($request, $response){
+      
+      $ownerlogin = getLoginFromTokenPayload($request, $response);
+
+      $db = getDatabase();
+      $data = $db->getAllBookingsViaLogin($ownerlogin);
       $db->close();
 
       return $response->withJson($data, 200)
@@ -471,6 +495,35 @@
          $status = 1;
 
       $dbs = $db->updateContactStatusViaId($id, $status);
+      $db->close();
+
+      $data = Array(
+         "updateStatus" => $dbs->status,
+         "errorMessage" => $dbs->error,
+         "status" => $status
+      );
+
+      return $response->withJson($data, 200)
+                      ->withHeader('Content-type', 'application/json');
+   });
+
+   $app->put('/reports/status/[{id}]', function($request, $response, $args){
+     
+      //from url
+      $id = $args['id'];
+
+      //form data, from json data
+      $json = json_decode($request->getBody());
+      $status = $json->status;
+
+      $db = getDatabase();
+
+      if ($status)
+         $status = 0;
+      else
+         $status = 1;
+
+      $dbs = $db->updateBookingStatusViaId($id, $status);
       $db->close();
 
       $data = Array(

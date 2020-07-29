@@ -9,26 +9,25 @@
 			    	<tr>
 				      <th>#</th>
 				      <th>Tourist Name</th>
-					  <th>Booked Package</th>
+					  <th>Total Person</th>
+					  <th>Phone No</th>
+					  <th>Booked Package (id </th>
 				      <th>Status</th>
 			    	</tr>
 			  	</thead>
 			  	<tbody>
-				   {{#each contactlist}}
+				   {{#each bookinglist}}
 				      <tr>
 					      <td class='index-column'></td>
 
-					      <td>
-					      	<a href="#contacts/view/{{id}}" style="text-decoration: underline">
-					      		{{ name }}
-					      	</a>
-					      </td>
-						  
-						  <td></td>
-					      
+					      <td>{{ name }}</td>
+						  <td>{{ totalPerson }}</td>
+						  <td>{{ phoneNo }}</td>
+						  <td>{{ idTravel }}</td>
 						  <td>
-					      	<a href="javascript:;" class="updatestatus" style="text-decoration: none">
-					      		{{{ displaystatustype2 status }}}
+							  
+					      	<a href="javascript:;" class="" style="text-decoration: none">
+					      		{{{ displaystatustype3 status }}}
 					      	</a>
 					      </td>
 				      </tr>
@@ -58,7 +57,7 @@
 
 			Swal.fire({
 			  	title: 'Are you sure?',
-			  	html: "You want to change the status?<br />Status: " + status,
+			  	html: "You want to change this booking ?<br />Status: " + status,
 			   icon: 'warning',
 			   showCancelButton: true,
 			   confirmButtonColor: '#3085d6',
@@ -74,7 +73,7 @@
 
 	            $.ajax({
 	               type: "put",
-	               url: 'api/contacts/status/' + id,
+	               url: 'api/reports/status/' + id,
 					   contentType: 'application/json',
 			      	data: JSON.stringify(obj),            
 					   dataType: "json",
@@ -82,12 +81,12 @@
 
 	                  if (data.updateStatus) {
 
-	                     bootbox.alert("Booking status update successful");
+	                     bootbox.alert("Status Updated!");
 
 	                     $(firstTD).data("status", data.status);
 
 								if (data.status == 0)				
-									$(link).html("<span class='label label-danger'>Booked</span>"); 
+									$(link).html("<span class='label label-danger'>Not Approved</span>"); 
 								else
 									$(link).html("<span class='label label-success'>Approved</span>");	
 	                  } 
@@ -117,7 +116,7 @@
 
 			Swal.fire({
 			  	title: 'Are you sure?',
-			  	html: "You want to delete the contact?",
+			  	html: "You want to delete the destination?",
 			   icon: 'warning',
 			   showCancelButton: true,
 			   confirmButtonColor: '#3085d6',
@@ -140,7 +139,7 @@
 
 	                  if (data.deleteStatus) {
 
-	                     bootbox.alert("contact deletion successful");
+	                     bootbox.alert("Destination deletion successful");
 
 						      $(parentTR).fadeOut("slow", "swing", function(e) {
 
