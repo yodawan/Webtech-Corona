@@ -1,7 +1,7 @@
 <div class="row">
    <div class="col-sm-6">   
       <h1>Add Bookings<h1/>  
-      
+
 		<form class="form-horizontal" id="formadd">
 		  <fieldset>
 		    <div class="form-group">
@@ -22,20 +22,26 @@
 		        <input type="number" class="form-control" id="addmobileno" required>
 		      </div>
 		    </div>
-			{{!-- <div class="form-group">
-		      <label for="addgender" class="col-lg-2 control-label">Travel Package</label>
+			
+			<div class="form-group">
+		      <label for="addid" class="col-lg-2 control-label">ID</label>
 		      <div class="col-lg-10">
-		        <select class="form-control" id="addgender">
-		        	 <option value='-1' selected>Please select your travel</option>
-		        	 <option value='0'>Egypt</option>
-		        	 <option value='1'>France</option>
-		        </select>
+		        <input type="number" class="form-control" id="idtravel"  required >
 		      </div>
-		    </div>--}}    
+		    </div>
+
 		    <div class="form-group">
-		      <div class="col-lg-10 col-lg-offset-2">
-		        <button type="reset" class="btn btn-default" id="formaddcancel">Cancel</button>
-		        <button type="submit" class="btn btn-primary">Submit</button>
+		      <label for="adddate" class="col-lg-2 control-label">Date Travel</label>
+		      <div class="col-lg-10">
+		        <input type="date" class="form-control" id="datetravel"  required>
+		      </div>
+		    </div>
+
+		    <div class="form-group">
+				<div class="col-lg-10 col-lg-offset-2">
+		        	<button type="reset" class="btn btn-default" id="formaddcancel">Cancel</button>
+					
+					<button type="submit" class="btn btn-primary">Submit</button>
 		      </div>
 		    </div>
 		  </fieldset>

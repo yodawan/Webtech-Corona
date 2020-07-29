@@ -408,7 +408,7 @@ Handlebars.registerHelper("displaystatustype3", function(status) {
 
 		$(".navbar-collapse li").removeClass('active');
 	  	$(".navbar-collapse li a[href='#contacts']").parent().addClass('active');
-
+	  	
 		//refresh the token for another 15 minutes			
 	   $.ajax({
 	      type: "post",

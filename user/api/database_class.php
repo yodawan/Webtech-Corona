@@ -225,7 +225,7 @@
          try {
             
             $sql = "INSERT INTO bookings(name, totalPerson, phoneNo, idTravel, dateTravel, ownerlogin, addeddate) 
-                    VALUES (:packageName, :price, :totalDay, :airlineName, :dateTravel, :ownerlogin, NOW())";
+                    VALUES (:name, :totalPerson, :phoneNo, :idTravel, :dateTravel, :ownerlogin, NOW())";
 
             $stmt = $this->db->prepare($sql);  
             $stmt->bindParam("name", $name);

@@ -373,7 +373,7 @@
       $dateTravel = $json->dateTravel;
 
       $db = getDatabase();
-      $dbs = $db->insertBooking($name, $totalPerson, $phoneNo, $idTravel, $dateTravel, $ownerlogin);
+      $dbs = $db->insertBooking($name, $totalPerson, $phoneNo, $idTravel,$dateTravel, $ownerlogin);
       $db->close();
 
       $data = array(

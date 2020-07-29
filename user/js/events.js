@@ -17,44 +17,38 @@ $(function(){
 
 		//get the value from the form
 		var name = $("#addname").val();
-		var email = $("#addemail").val();
-		var mobileno = $("#addmobileno").val();
-		var gender = $("#addgender").val();
-
-
-		var dob = $('#adddob').data('daterangepicker').startDate.format("YYYY-MM-DD");
-
-		if (gender == -1) {
-			bootbox.alert("Please select airline!");
-			return;
-		}
+		var totalPerson = $("#addemail").val();
+		var phoneNo = $("#addmobileno").val();
+		var idtravel = $("#idtravel").val();
+		var datetravel = $("#datetravel").val();		
 		
 		var obj = new Object();
 	 	obj.name = name;
-	 	obj.email = email;
-	 	obj.mobileno = mobileno;
-	 	obj.gender = gender;
-	 	obj.dob = dob;
-
+	 	obj.totalPerson = totalPerson;
+	 	obj.phoneNo = phoneNo;
+	 	obj.idtravel = idtravel;
+		obj.datetravel = datetravel;
 		$.ajax({
 		   type: "post",
 		   url: 'api/contacts',
-		   contentType: 'application/json',
+		   contentType: "application/json",
       	data: JSON.stringify(obj),            
 		   dataType: "json",
 		   success: function(data){
 
 		      if (data.insertStatus) {
 
-		         bootbox.alert("Destination insertion successful");
+		         bootbox.alert("Booking Successful");
+		         		   console.log(obj);
 
 		         //redirect to the /#contacts
 		         window.location.href = "#contacts";
 
 		      } 
 		      else {
+		      				         		   console.log(obj);
 
-		         alert("Destination insertion failed - please try again: " + data.errorMessage)
+		         alert("Booking failed - please try again: " + data.errorMessage)
 		      }
 		   },
          error: function(xhr, statusText, err) {
