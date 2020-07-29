@@ -413,6 +413,18 @@
                       ->withHeader('Content-type', 'application/json');
    });
 
+      $app->get('/reports/[{status}]', function($request, $response, $args){
+
+      $status = $args['status'];
+
+      $db = getDatabase();
+      $data = $db->getAllBookingsViaStatus($status);
+      $db->close();
+
+      return $response->withJson($data, 200)
+                      ->withHeader('Content-type', 'application/json');
+   });
+
    $app->get('/home', function($request, $response){
       
       $ownerlogin = getLoginFromTokenPayload($request, $response);

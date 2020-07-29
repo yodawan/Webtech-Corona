@@ -159,6 +159,8 @@ $(function(){
 		var decoded = jwt_decode(token);
 		$("#loginname").html(decoded.login);		
 
+
+
 		//get user login data
 	   $.ajax({
 	      type: "GET",
@@ -217,49 +219,16 @@ $(function(){
 		var decoded = jwt_decode(token);
 		$("#loginname").html(decoded.login);		
 
-		//get user login data
-	   $.ajax({
-	      type: "GET",
-	      url: 'api/users',               
-	      dataType: "json",
-	      success: function(data){
 
-				var homeTemplate = Handlebars.templates['home'](data);
-
-				$("#divcontent").empty();
-				$("#divcontent").html(homeTemplate).hide().fadeIn(1000);
-		
-         },
-         error: function(xhr, statusText, err) {
-
-         	if (xhr.status == 401) {
-			     	//response text from the server if there is any
-			     	var responseText = JSON.parse(xhr.responseText);
-			     	bootbox.alert("Error 401 - Unauthorized: " + responseText.message);
-
-					$("#loginname").html("noname");
-					sessionStorage.removeItem("token");
-					sessionStorage.removeItem("login");
-					window.location.href = "#login";
-					return;
-			   }
-
-			   if (xhr.status == 404) {
-			     	bootbox.alert("Error 404 - API resource not found at the server");
-			   }
-
-         }
-      });
-/*
 	   $.ajax({
 	      type: "get", 
 	      url: 'api/reports',
 	      dataType: "json",
 	      success: function(data){
 			
-				var homeTemplate = Handlebars.templates['home']({"bookinglist1": data});
+				var homeTemplate = Handlebars.templates['home-total']({"bookinglistt": data});
 
-				$("#divcontent").html(bookingsTemplate).hide().fadeIn(1000);
+				$("#divcontent").html(homeTemplate).hide().fadeIn(1000);
 
 				//add data using json array in context to first-td for each row in tbody
 				$('#tblcontacts tbody tr').each(function(i) {
@@ -284,7 +253,6 @@ $(function(){
 					$(tdIndex).data("phoneNo", phoneNo);
 					$(tdIndex).data("idTravel", idTravel);
 					$(tdIndex).data("photo", photo);
-
 					$(tdIndex).data("dateTravel", dateTravel);
 					$(tdIndex).data("addeddate", addeddate);
 					$(tdIndex).data("status", status);					
@@ -314,7 +282,137 @@ $(function(){
 			     	bootbox.alert("Error 404 - API resource not found at the server");
 			   }
          }
-	  });*/
+	  });
+
+
+
+	   $.ajax({
+	      type: "get", 
+	      url: 'api/reports/0' ,
+	      dataType: "json",
+	      success: function(data){
+			
+				var home1Template = Handlebars.templates['home-notapproved']({"bookinglisttt": data});
+
+				$("#divcontent").append(home1Template);
+
+				//add data using json array in context to first-td for each row in tbody
+				$('#tblcontacts tbody tr').each(function(i) {
+					var tdIndex = $(this).children().eq(0);
+
+					var id = data[i].id;
+
+					var name = data[i].name;
+					var totalPerson = data[i].totalPerson;
+					var phoneNo = data[i].phoneNo;
+					var idTravel = data[i].idTravel;
+					var photo = data[i].photo;
+
+					var dateTravel = data[i].dateTravel;
+					var addeddate = data[i].addeddate;
+					var status = data[i].status;				
+
+					$(tdIndex).data("id", id);
+
+					$(tdIndex).data("name", name);
+					$(tdIndex).data("totalPerson", totalPerson);
+					$(tdIndex).data("phoneNo", phoneNo);
+					$(tdIndex).data("idTravel", idTravel);
+					$(tdIndex).data("photo", photo);
+					$(tdIndex).data("dateTravel", dateTravel);
+					$(tdIndex).data("addeddate", addeddate);
+					$(tdIndex).data("status", status);					
+						
+				});
+
+				//reading the data from the first td of each row in tbody
+				$('#tblcontacts tbody tr').each(function(i) {
+					var tdIndex = $(this).children().eq(0);
+				});
+         },
+         error: function(xhr, statusText, err) {
+
+         	if (xhr.status == 401) {
+			     	//response text from the server if there is any
+			     	var responseText = JSON.parse(xhr.responseText);
+			     	bootbox.alert("Error 401 - Unauthorized: " + responseText.message);
+			     	
+					$("#loginname").html("noname");
+					sessionStorage.removeItem("token");
+					sessionStorage.removeItem("login");
+					window.location.href = "#login";
+					return;
+			   }
+
+			   if (xhr.status == 404) {
+			     	bootbox.alert("Error 404 - API resource not found at the server");
+			   }
+         }
+	  });
+
+
+$.ajax({
+	      type: "get", 
+	      url: 'api/reports/1' ,
+	      dataType: "json",
+	      success: function(data){
+			
+				var home2Template = Handlebars.templates['home-approved']({"bookinglistttt": data});
+
+				$("#divcontent").append(home2Template);
+				//add data using json array in context to first-td for each row in tbody
+				$('#tblcontacts tbody tr').each(function(i) {
+					var tdIndex = $(this).children().eq(0);
+
+					var id = data[i].id;
+
+					var name = data[i].name;
+					var totalPerson = data[i].totalPerson;
+					var phoneNo = data[i].phoneNo;
+					var idTravel = data[i].idTravel;
+					var photo = data[i].photo;
+
+					var dateTravel = data[i].dateTravel;
+					var addeddate = data[i].addeddate;
+					var status = data[i].status;				
+
+					$(tdIndex).data("id", id);
+
+					$(tdIndex).data("name", name);
+					$(tdIndex).data("totalPerson", totalPerson);
+					$(tdIndex).data("phoneNo", phoneNo);
+					$(tdIndex).data("idTravel", idTravel);
+					$(tdIndex).data("photo", photo);
+					$(tdIndex).data("dateTravel", dateTravel);
+					$(tdIndex).data("addeddate", addeddate);
+					$(tdIndex).data("status", status);					
+						
+				});
+
+				//reading the data from the first td of each row in tbody
+				$('#tblcontacts tbody tr').each(function(i) {
+					var tdIndex = $(this).children().eq(0);
+				});
+         },
+         error: function(xhr, statusText, err) {
+
+         	if (xhr.status == 401) {
+			     	//response text from the server if there is any
+			     	var responseText = JSON.parse(xhr.responseText);
+			     	bootbox.alert("Error 401 - Unauthorized: " + responseText.message);
+			     	
+					$("#loginname").html("noname");
+					sessionStorage.removeItem("token");
+					sessionStorage.removeItem("login");
+					window.location.href = "#login";
+					return;
+			   }
+
+			   if (xhr.status == 404) {
+			     	bootbox.alert("Error 404 - API resource not found at the server");
+			   }
+         }
+	  });
 
 		$(".breadcrumb").empty();
 		$(".breadcrumb").append("<li class='active'>Home</li>");

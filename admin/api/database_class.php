@@ -340,6 +340,51 @@
          return $data;
       }
 
+//get all booking by status
+      function getAllBookingsViaStatus($status) {
+         $sql = "SELECT *
+                  FROM bookings
+                  WHERE status = :status
+                 ";
+
+
+         $stmt = $this->db->prepare($sql);
+         $stmt->bindParam("status", $status);
+         $stmt->execute(); 
+         $row_count = $stmt->rowCount();
+
+         $data = array();
+
+         if ($row_count)
+         {
+            while($row = $stmt->fetch(PDO::FETCH_ASSOC))
+            {
+               $booking = new Booking();
+               $booking->id = $row['id'];
+               $booking->name = $row['name'];
+               $booking->totalPerson = $row['totalPerson'];
+               $booking->phoneNo = $row['phoneNo'];
+               $booking->idTravel = $row['idTravel'];
+               $booking->photo = $row['photo'];
+               
+               $dob = $row['dateTravel'];
+               $frontenddob = date("d-m-Y",strtotime($dob));
+               $booking->dateTravel = $frontenddob;
+
+               $addeddate = $row['addeddate'];
+               $booking->addeddate = time_elapsed_string($addeddate); 
+
+               $booking->status = $row['status'];  
+
+               array_push($data, $booking);
+            }
+         }
+         return $data;
+      }
+
+
+
+
       //get single contact via id
       //ownerlogin for rolling no hacking (the id)
       function getContactViaId($id) {

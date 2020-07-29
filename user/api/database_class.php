@@ -298,6 +298,8 @@
          return $data;
       }
 
+
+
       //get all contacts
       function getAllBookingsViaLogin($ownerlogin) {
          $sql = "SELECT *
