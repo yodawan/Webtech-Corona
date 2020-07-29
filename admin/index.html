@@ -4,7 +4,7 @@
       <title>CORONAMU MALAYSIA</title>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
-      <link rel="stylesheet" href="css/bootstrap.min.css">
+      <link rel="stylesheet" href="css/bootstrap.css">
 
       <!-- Custom styles for this template -->
       <link href="css/navbar-fixed-top.css" rel="stylesheet">
@@ -40,16 +40,29 @@
             margin-top: -50px;
             z-index:2;
             overflow: auto;
-         }  
+         } 
+         
+         .bg_one {
+            background-image: url("background_one.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+         }
+
+         .bg_two {
+            background-image: url("background_two.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+         }
+
       </style>      
    </head>
-   <body>
+   <body class="bg_two">
       <div id="spinner" style="display:none">
          <img src="img/spinner.gif" class="ajax-loader"/>
       </div>
       
       <!-- Fixed navbar -->
-      <nav class="navbar navbar-default navbar-fixed-top">
+      <nav style="background-color: #eb9605;" class="navbar navbar-default navbar-fixed-top">
          <div class="container">
             <div class="navbar-header">
                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -58,18 +71,18 @@
                   <span class="icon-bar"></span>
                   <span class="icon-bar"></span>
                </button>
-               <a class="navbar-brand" href="#">CORONAMU MALAYSIA</a>
+               <a style="color: white;" class="navbar-brand" href="#"><i class="fa fa-plane"></i> CORONAMU MALAYSIA</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                <ul class="nav navbar-nav">
-                  <li class="active"><a data-toggle="collapse" data-target=".navbar-collapse.in" href="#home">Home</a></li>
-                  <li><a data-toggle="collapse" data-target=".navbar-collapse.in" href="#contacts">Destination</a></li>
-                  <li><a data-toggle="collapse" data-target=".navbar-collapse.in" href="#reports">Booking</a></li>
-                  <li><a data-toggle="collapse" data-target=".navbar-collapse.in" href="#about">About</a></li>
+                  <li class="active"><a style="color: white;" data-toggle="collapse" data-target=".navbar-collapse.in" href="#home">Home</a></li>
+                  <li><a style="color: white;" data-toggle="collapse" data-target=".navbar-collapse.in" href="#contacts">Destination</a></li>
+                  <li><a style="color: white;" data-toggle="collapse" data-target=".navbar-collapse.in" href="#reports">Booking</a></li>
+                  <li><a style="color: white;" data-toggle="collapse" data-target=".navbar-collapse.in" href="#about">About</a></li>
                </ul>
                <ul class="nav navbar-nav navbar-right">   
                   <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span id="loginname" style="color: yellow">noname</span> <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span id="loginname" style="color: white">noname</span> <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                       <li><a data-toggle="collapse" data-target=".navbar-collapse.in" href="#profile">Profile</a></li>
                       <li><a href="#logout">Logout</a></li>
@@ -81,8 +94,8 @@
       </nav>
 
       <div class="container">
-         <div class="jumbotron">
-           <h1>CORONAMU MALAYSIA (Admin)</h1>
+         <div class="jumbotron bg_one">
+           <h1 style="text-align: center;">CORONAMU MALAYSIA (Admin)</h1>
            <img id="photo"/>
          </div>
 
@@ -121,6 +134,8 @@
       <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
 
       <script src="js/jwt-decode.min.js"></script>
+
+      <script src="https://kit.fontawesome.com/a076d05399.js"></script>
       
       
       <script src="js/app.js"></script>
